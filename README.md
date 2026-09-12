@@ -29,13 +29,24 @@ Parte A
 1. Construir en Proto-Board el circuito que se muestra en la Figura 1:
 
 <img width="526" height="290" alt="image" src="https://github.com/user-attachments/assets/19da24e1-a340-4678-ab0b-9d898597f093" />
+
  <b>Figura 1.</b> Circuito para capturar las variaciones del volumen sanguíneo periférico.
+</p>
+
+Se construyó en una protoboard el circuito propuesto en la Figura 1 de la guía, orientado a capturar las variaciones del volumen sanguíneo periférico a partir de un sensor óptico. El circuito está compuesto por un sensor óptico de reflectancia, un transistor 2N3904 que actúa como etapa de conmutación/amplificación inicial de la señal del fototransistor, y un amplificador operacional dual LM358 configurado para acondicionar dicha señal, apoyado en resistencias de distintos valores, un condensador cerámico de 100 nF, un condensador electrolítico de 4.7 µF y dos potenciómetros para ajustar la ganancia y el offset de la etapa analógica.
+
+Como sensor óptico se utilizó el TCST1103 en lugar del TCST110 sugerido por la guía, dado que este último no se consiguió comercialmente al momento de construir el circuito. Ambos son optoacopladores con un principio de funcionamiento equivalente (emisor infrarrojo y fototransistor receptor enfrentados), por lo que su uso no alteró la estructura del circuito construido. La Figura 2 muestra el resultado de este montaje, incluyendo el sensor alojado en una carcasa de cartón para aislarlo de la luz ambiente durante la medición.
+
+<img width="1600" height="1204" alt="image" src="https://github.com/user-attachments/assets/ef1114fd-e94b-4803-b850-259881ed89d5" />
+
+ <b>Figura 2.</b> Construcción del circuito para capturar las variaciones del volumen sanguíneo periférico.
 </p>
 
 2. Si está usando un acoplador óptico TCST110, modifíquelo tal y como se ilustra
 en la Figura 2 para convertirlo en un sensor de reflectancia:
 
 <img width="503" height="252" alt="image" src="https://github.com/user-attachments/assets/11ed73ae-2e98-48e7-b07f-c1402458d6ab" />
+
 <b>Figura 2.</b> Sensor óptico de reflectancia basado en el optoacoplador TCST110.
 </p>
 
