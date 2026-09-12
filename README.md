@@ -46,18 +46,13 @@ Como sensor óptico se utilizó el TCST1103 en lugar del TCST110 sugerido por la
 en la Figura 2 para convertirlo en un sensor de reflectancia:
 
 <img width="503" height="252" alt="image" src="https://github.com/user-attachments/assets/11ed73ae-2e98-48e7-b07f-c1402458d6ab" />
+<b>Figura 3.</b> Sensor óptico de reflectancia basado en el optoacoplador TCST110.
+</p>
 
 
 Como se mencionó anteriormente se usó el sensor TCST1103 el cual sí fue modificado físicamente para convertirlo de su configuración original transmisiva a una configuración de reflectancia, tal como se ilustra en la Figura 3, el emisor y el receptor infrarrojo, que originalmente están enfrentados a través de la ranura del optoacoplador, se separaron y reorientaron para quedar dispuestos lado a lado, apuntando ambos hacia la misma dirección. De esta manera, en lugar de que la luz emitida atraviese el dedo para ser captada al otro lado, la luz incide sobre el dedo y es la porción reflejada por el tejido la que llega al fototransistor receptor.
 
 Este sensor ya modificado se montó dentro de una carcasa de cartón construida a la medida (Figura 4), con el TCST1103 fijo en la base y una abertura superior por la cual el voluntario introduce el dedo, apoyándolo sobre el sensor. La carcasa cumple dos funciones ya que mantiene el dedo en una posición fija y constante sobre el par emisor-receptor, evitando que el movimiento degrade la señal reflejada, y bloquea la entrada de luz ambiente, la cual de otro modo se sumaría como interferencia a la señal óptica de interés, dado que el fototransistor no distingue entre la luz infrarroja reflejada por el dedo y cualquier otra fuente de luz externa.
-
-<img width="1204" height="1600" alt="WhatsApp Image 2026-09-12 at 12 25 17 PM" src="https://github.com/user-attachments/assets/6e5da210-62c8-4a47-abd9-b9b8aa78dc25" />
-
-<b>Figura 3.</b> Sensor óptico de reflectancia basado en el optoacoplador TCST110.
-</p>
-
-Como ya se mencionó anteriormente,no se empleó el TCST110 sino el TCST1103, sensor que se utilizó en su configuración como interruptor óptico en donde el dedo del voluntario se introduce en la ranura del sensor  quedando entre el emisor y el receptor infrarrojo, en lugar de reflejar la luz desde un mismo lado como ocurriría en una configuración de reflectancia. Por esta razón, la modificación descrita en este punto no fue necesaria ni aplicable en la implementación realizada.
 
 <img width="1204" height="1600" alt="WhatsApp Image 2026-09-12 at 12 25 17 PM" src="https://github.com/user-attachments/assets/f13a3991-070e-48c4-88b9-df14ae9c1b64" />
 <b>Figura 4.</b> Modifucación TCST1103 .
