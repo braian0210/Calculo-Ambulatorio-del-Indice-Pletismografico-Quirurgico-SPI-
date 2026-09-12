@@ -66,6 +66,47 @@ con la menor interferencia posible. NOTA: Puede que sea necesario emplear
 una fuente negativa para controlar el offset de la señal, en cuyo caso, se
 recomienda usar VEE = -3 VDC para alimentar a los operacionales.
 
+El paso siguiente consistía en conectar la salida analógica  del circuito a una entrada analógica del microcontrolador y verificar mediante el Monitor y Graficador Serial de Arduino IDE, que se obtuviera una señal pletismográfica reconocible, ajustando los potenciómetros del amplificador para lograr la forma de onda más limpia posible.
+
+Al realizar esta conexión, no se logró observar ninguna señal en el Graficador Serial, lo cual no se debía a que el sensor estuviera apagado o mal alimentado ya que se confirmó, usando la cámara de un celular que el diodo emisor efectivamente estaba encendido, deduciendo así que la etapa óptica del sensor funcionaba correctamente, pero la señal no llegaba de forma utilizable hasta la entrada analógica del ESP32, lo que indicaba un problema en la etapa de acondicionamiento  o en su acople con el rango de lectura del ADC del microcontrolador. Ante esta dificultad, se optó por reemplazar la adquisición basada en el circuito por el módulo integrado MAX30102, el cual es es un sensor de pulsioximetría que integra en un solo chip el LED emisor (rojo e infrarrojo), el fotodetector y todo el front-end analógico (amplificación, filtrado y conversión analógico-digital), entregando directamente por comunicación digital un valor numérico proporcional a la luz reflejada por el tejido [2]. Esto elimina la necesidad de construir y calibrar manualmente las etapas de amplificación y filtrado del circuito discreto, ya que el propio módulo resuelve internamente esa parte del acondicionamiento de la señal.
+
+El MAX30102 se conectó por  I2C a la ESP32-S3-N16R8, usando SDA = GPIO8 y SCL = GPIO9, y se manejó mediante la librería SparkFun MAX30105. La configuración utilizada en Arduino IDE fue la siguiente:
+
+```
+#include <Wire.h>
+#include "MAX30105.h"
+
+MAX30105 particleSensor;
+
+#define SDA_PIN 8
+#define SCL_PIN 9
+
+void setup() {
+  Serial.begin(115200);
+  Wire.begin(SDA_PIN, SCL_PIN);      // SDA=8, SCL=9
+
+  if (!particleSensor.begin(Wire, I2C_SPEED_FAST)) {
+    Serial.println("MAX30102 no detectado. Revisa el cableado.");
+    while (1);
+  }
+
+  particleSensor.setup(0x1F, 4, 2, 100, 411, 4096);
+  // ledBrightness, sampleAverage, ledMode(2=Red+IR), sampleRate, pulseWidth, adcRange
+}
+
+void loop() {
+  long irValue = particleSensor.getIR();
+  Serial.println(irValue);
+}
+```
+
+
+<img width="1917" height="1020" alt="RESPUESTA_EN_ARDUINO" src="https://github.com/user-attachments/assets/b9ffedf7-4620-4543-aada-edc7b0082871" />
+
+<b>Figura 5.</b> Respuesta en el Serial Plotter .
+</p>
+
+Con esta configuración, el Monitor y Graficador Serial mostró de inmediato una señal de gran amplitud y claramente periódica superior en estabilidad a lo que se había obtenido con el circuito. Se verificó, sin embargo, que en esta señal cruda los picos sistólicos aparecían como valles (mínimos locales) en lugar de máximos, por lo que  se decidió invertir la señal  antes de cualquier procesamiento posterior en MATLAB, de modo que los picos sistólicos quedaran representados como máximos y pudieran procesarse con el algoritmo de detección de picos.
 
 4. Investigue sobre la técnica “Cold Pressor Test” (CPT), en qué consiste y cómo
 aplicarla en el laboratorio.
@@ -116,18 +157,23 @@ empleados en cirugía, como el índice nocicepción-analgesia (ANI) y el
 # Conclusión
 
 # Referencias 
+
 [1] J. L. Apfelbaum, C. Chen, S. S. Mehta, and T. J. Gan, "Postoperative pain experience: results from a national survey suggest postoperative pain continues to be undermanaged," Anesth. Analg., vol. 97, no. 2, pp. 534–540, 2003. doi: 10.1213/01.ANE.0000068822.10113.9E.
 
-[2] S. K. Oh, Y. J. Won, and B. G. Lim, "Surgical pleth index monitoring in perioperative pain management: usefulness and limitations," Korean J. Anesthesiol., vol. 77, no. 1, pp. 31–45, 2024. doi: 10.4097/kja.23158.
+[2] J. Simões, R. Oliveira, F. M. Costa, A. Teixeira, C. Leitão, P. Correia, and A. L. M. Silva, "Non-Intrusive Monitoring of Vital Signs in the Lower Limbs Using Optical Sensors," Sensors (Basel), vol. 25, no. 2, art. 305, 2025. doi: 10.3390/s25020305.
 
-[3] E. J. Argüello-Prada, M. A. Dávalos Cantín, and J. C. Victoria, "A photoplethysmography-based system for talking detection in bedridden patients," Biomed. Signal Process. Control, vol. 81, art. 104477, 2023. doi: 10.1016/j.bspc.2022.104477.
+[3] S. K. Oh, Y. J. Won, and B. G. Lim, "Surgical pleth index monitoring in perioperative pain management: usefulness and limitations," Korean J. Anesthesiol., vol. 77, no. 1, pp. 31–45, 2024. doi: 10.4097/kja.23158.
 
-[4] P. H. Charlton, E. J. Argüello-Prada, J. Mant, and P. A. Kyriacou, "The MSPTDfast photoplethysmography beat detection algorithm: design, benchmarking, and open-source distribution," Physiol. Meas., vol. 46, art. 035002, 2025. doi: 10.1088/1361-6579/adb89e.
+[4] E. J. Argüello-Prada, M. A. Dávalos Cantín, and J. C. Victoria, "A photoplethysmography-based system for talking detection in bedridden patients," Biomed. Signal Process. Control, vol. 81, art. 104477, 2023. doi: 10.1016/j.bspc.2022.104477.
 
-[5] K. Hamunen, V. Kontinen, E. Hakala, P. Talke, M. Paloheimo, and E. Kalso, "Effect of pain on autonomic nervous system indices derived from photoplethysmography in healthy volunteers," Br. J. Anaesth., vol. 108, no. 5, pp. 838–844, 2012. doi: 10.1093/bja/aes001.
+[5] P. H. Charlton, E. J. Argüello-Prada, J. Mant, and P. A. Kyriacou, "The MSPTDfast photoplethysmography beat detection algorithm: design, benchmarking, and open-source distribution," Physiol. Meas., vol. 46, art. 035002, 2025. doi: 10.1088/1361-6579/adb89e.
 
-[6] M. Vincenot, M. Roberge, C.-É. Giguère, and S. Potvin, "Conditioned pain modulation and pleasant pain relief as complementary processes reflecting individual differences in pain coping: a clustering approach," Eur. J. Pain, vol. 30, no. 8, art. e70366, 2026. doi: 10.1002/ejp.70366.
+[6] K. Hamunen, V. Kontinen, E. Hakala, P. Talke, M. Paloheimo, and E. Kalso, "Effect of pain on autonomic nervous system indices derived from photoplethysmography in healthy volunteers," Br. J. Anaesth., vol. 108, no. 5, pp. 838–844, 2012. doi: 10.1093/bja/aes001.
 
-[7] M. Arevalillo-Herráez, Y. Wu, B. Tilbury, and N. Ramzan, "Motion-based confidence score to support the practical application of rPPG methods in health monitoring," J. Med. Syst., vol. 50, no. 1, 2026. doi: 10.1007/s10916-026-02412-2.
+[7] M. Vincenot, M. Roberge, C.-É. Giguère, and S. Potvin, "Conditioned pain modulation and pleasant pain relief as complementary processes reflecting individual differences in pain coping: a clustering approach," Eur. J. Pain, vol. 30, no. 8, art. e70366, 2026. doi: 10.1002/ejp.70366.
+
+[8] M. Arevalillo-Herráez, Y. Wu, B. Tilbury, and N. Ramzan, "Motion-based confidence score to support the practical application of rPPG methods in health monitoring," J. Med. Syst., vol. 50, no. 1, 2026. doi: 10.1007/s10916-026-02412-2.
+
+[9] M. Koriakina, M. Lukov, U. Nikishkina, A. Kirsanov, E. Dmitrieva, and E. Blagovechtchenski, "Social and physiological stress elicit divergent psycho-physiological dynamics and motor cortex activation," Front. Psychol., vol. 17, art. 1760772, 2026. doi: 10.3389/fpsyg.2026.1760772.
 
 [8] M. Koriakina, M. Lukov, U. Nikishkina, A. Kirsanov, E. Dmitrieva, and E. Blagovechtchenski, "Social and physiological stress elicit divergent psycho-physiological dynamics and motor cortex activation," Front. Psychol., vol. 17, art. 1760772, 2026. doi: 10.3389/fpsyg.2026.1760772.
