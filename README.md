@@ -73,6 +73,12 @@ Al realizar esta conexión, no se logró observar ninguna señal en el Graficado
 
 El MAX30102 se conectó por  I2C a la ESP32-S3-N16R8, usando SDA = GPIO8 y SCL = GPIO9, y se manejó mediante la librería SparkFun MAX30105. La configuración utilizada en Arduino IDE fue la siguiente:
 
+<img width="1600" height="1204" alt="image" src="https://github.com/user-attachments/assets/3177ff6e-2eac-41ee-8d02-9091cf82f592" />
+
+<b>Figura 5.</b> Circuito de Adquisición con MAX30102.
+</p>
+
+
 ```
 #include <Wire.h>
 #include "MAX30105.h"
@@ -104,7 +110,7 @@ void loop() {
 
 <img width="1917" height="1020" alt="RESPUESTA_EN_ARDUINO" src="https://github.com/user-attachments/assets/b9ffedf7-4620-4543-aada-edc7b0082871" />
 
-<b>Figura 5.</b> Respuesta en el Serial Plotter .
+<b>Figura 6.</b> Respuesta en el Serial Plotter .
 </p>
 
 Con esta configuración, el Monitor y Graficador Serial mostró de inmediato una señal de gran amplitud y claramente periódica superior en estabilidad a lo que se había obtenido con el circuito. Se verificó, sin embargo, que en esta señal cruda los picos sistólicos aparecían como valles (mínimos locales) en lugar de máximos, por lo que  se decidió invertir la señal  antes de cualquier procesamiento posterior en MATLAB, de modo que los picos sistólicos quedaran representados como máximos y pudieran procesarse con el algoritmo de detección de picos.
