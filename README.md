@@ -46,6 +46,7 @@ Como sensor óptico se utilizó el TCST1103 en lugar del TCST110 sugerido por la
 en la Figura 2 para convertirlo en un sensor de reflectancia:
 
 <img width="503" height="252" alt="image" src="https://github.com/user-attachments/assets/11ed73ae-2e98-48e7-b07f-c1402458d6ab" />
+
 <b>Figura 3.</b> Sensor óptico de reflectancia basado en el optoacoplador TCST110.
 </p>
 
@@ -127,6 +128,15 @@ la práctica. En caso de utilizar modelos de IA generativa (e.g., ChatGPT) debe
 verificar la información contra una fuente confiable (e.g., libros, manuales,
 informes técnicos).
 
+El índice pletismográfico quirúrgico (Surgical Pleth Index, SPI) es una herramienta de monitoreo desarrollada originalmente por GE Healthcare para estimar, de forma objetiva y no invasiva, el balance entre la nocicepción y la analgesia durante cirugías bajo anestesia general, a partir de la señal fotopletismográfica obtenida en la arteriola del dedo [8]. Según la definición reportada en la literatura, el SPI se calcula mediante la siguiente expresión:
+
+$$
+SPI = 100 - (0.33 \times HBI_{norm} + 0.67 \times PPGA_{norm})                [8].
+$$
+
+donde HBI (heartbeat interval) es el intervalo entre latidos consecutivos y PPGA (photoplethysmographic waveform amplitude) es la amplitud pico-valle de la onda de pulso fotopletismográfica, ambos normalizados a una escala de 0 a 100 antes de aplicarse en la fórmula [8]. El resultado es un índice que también varía entre 0 y 100, donde valores más altos indican una mayor respuesta nociceptiva; en el contexto clínico original, se considera que un rango adecuado de analgesia intraoperatoria corresponde a valores de SPI entre 20 y 50, y se recomienda evitar incrementos abruptos superiores a 10 unidades [8].
+
+El mecanismo fisiológico detrás de esta fórmula se basa es que un estímulo nociceptivo (por ejemplo, un estímulo quirúrgico, o en nuestro caso el Cold Pressor Test) incrementa el tono simpático, lo cual produce simultáneamente un aumento de la frecuencia cardíaca y por tanto una disminución del HBI y un aumento del tono vascular por vasoconstricción periférica lo que reduce la PPGA. Como ambos términos disminuyen y se restan de 100, el efecto neto es un incremento del valor del SPI [8]. Esta es precisamente la relación que se buscó reproducir con el sistema de adquisición propio construido, y la que permite interpretar fisiológicamente los resultados obtenidos con el Cold Pressor Test.
 
 
 2. Diseñe y elabore un breve código en MATLAB que capture la señal resultante
