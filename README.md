@@ -13,13 +13,15 @@ En este orden de ideas, el presente laboratorio tiene como propósito diseñar, 
 
 Objetivo General:
 
-Desarrollar un sistema de medición continua del índice pletismográfico quirúrgico (SPI) en condiciones ambulatorias.
+- Desarrollar un sistema de medición continua del índice pletismográfico quirúrgico (SPI) en condiciones ambulatorias.
 
 Objetivos Específicos:
 
-Reconocer las características fundamentales de la onda de pulso a partir de las cuales se obtiene el SPI.
-Construir un sistema que calcule el SPI en tiempo real y bajo condiciones ambulatorias.
-Validar el funcionamiento del sistema desarrollado mediante un método que induzca una respuesta fisiológica similar a la que produce el dolor agudo.
+- Reconocer las características fundamentales de la onda de pulso a partir de las cuales se obtiene el SPI.
+  
+- Construir un sistema que calcule el SPI en tiempo real y bajo condiciones ambulatorias.
+
+- Validar el funcionamiento del sistema desarrollado mediante un método que induzca una respuesta fisiológica similar a la que produce el dolor agudo.
 
 # Metodología
 Parte A
