@@ -26,12 +26,76 @@ Objetivos Específicos:
 # Metodología
 Parte A
 
+1. Construir en Proto-Board el circuito que se muestra en la Figura 1:
+
+<img width="526" height="290" alt="image" src="https://github.com/user-attachments/assets/19da24e1-a340-4678-ab0b-9d898597f093" />
+ <b>Figura 1.</b> Circuito para capturar las variaciones del volumen sanguíneo periférico.
+</p>
+
+2. Si está usando un acoplador óptico TCST110, modifíquelo tal y como se ilustra
+en la Figura 2 para convertirlo en un sensor de reflectancia:
+
+<img width="503" height="252" alt="image" src="https://github.com/user-attachments/assets/11ed73ae-2e98-48e7-b07f-c1402458d6ab" />
+<b>Figura 2.</b> Sensor óptico de reflectancia basado en el optoacoplador TCST110.
+</p>
+
+3. Conecte la salida del circuito a una de las entradas analógicas de una placa
+Arduino UNO o Nano y verifique empleado el “Serial Plotter” que aquel es
+capaz de registrar las variaciones del volumen sanguíneo periférico. Realice
+los ajustes necesarios mediante los potenciómetros para obtener una señal
+con la menor interferencia posible. NOTA: Puede que sea necesario emplear
+una fuente negativa para controlar el offset de la señal, en cuyo caso, se
+recomienda usar VEE = -3 VDC para alimentar a los operacionales.
+
+
+4. Investigue sobre la técnica “Cold Pressor Test” (CPT), en qué consiste y cómo
+aplicarla en el laboratorio.
+
+
 Parte B
+
+1. Revise la literatura relacionada para encontrar la definición matemática del
+índice pletismográfico quirúrgico (SPI) y asegúrese de incluirla al documentar
+la práctica. En caso de utilizar modelos de IA generativa (e.g., ChatGPT) debe
+verificar la información contra una fuente confiable (e.g., libros, manuales,
+informes técnicos).
+
+
+
+2. Diseñe y elabore un breve código en MATLAB que capture la señal resultante
+del circuito construido en la parte A y calcule el SPI con cada pulsación o
+latido. Utilice para ello un algoritmo de detección de máximos y mínimos. El
+resultado deberá mostrarse en la ventana de comandos de MATLAB y la
+captura se hará durante un tiempo finito, a elección del usuario.
+
+
+
+3. Pídale a uno de los integrantes del grupo que coloque su dedo sobre el sensor
+óptico y configure el código para una captura de 2 minutos. Cuando transcurran 40 segundos, el voluntario deberá ejecutar la maniobra “Cold
+Pressor Test” (CPT) durante otros 40 segundos. Tome nota de los valores que
+alcanza el SPI antes y durante la maniobra. Transcurrido este tiempo, el
+voluntario volverá a las condiciones iniciales hasta completarse los 2 minutos.
+Recuerde tomar nota también del valor SPI durante los últimos 40 segundos.
+
+
+
+4. Modifique el código para, mediante una gráfica y al final de la captura, se
+pueda visualizar la evolución del SPI en función del tiempo.
+
 
 Parte C 
 
+• Pregunta 1: ¿Cómo se relacionan las variaciones del volumen sanguíneo
+periférico con el balance autonómico?
+
+• Pregunta 2: ¿Cómo se compara el SPI con otros índices comúnmente
+empleados en cirugía, como el índice nocicepción-analgesia (ANI) y el
+índice de perfusión?
+
 # Análisis y Discusión De Resultados
+
 # Conclusión
+
 # Referencias 
 [1] J. L. Apfelbaum, C. Chen, S. S. Mehta, and T. J. Gan, "Postoperative pain experience: results from a national survey suggest postoperative pain continues to be undermanaged," Anesth. Analg., vol. 97, no. 2, pp. 534–540, 2003. doi: 10.1213/01.ANE.0000068822.10113.9E.
 
