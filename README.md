@@ -162,6 +162,18 @@ La validez y utilidad práctica de este algoritmo cuentan con respaldo adicional
 Una vez identificado cada pico sistólico, la amplitud pico-valle (PPGA) del candidato debe superar el 25 % de la mediana de los PPGA ya confirmados como válidos recientemente. Este criterio complementario, calculado sobre el propio historial de pulsos confirmados y no sobre un umbral absoluto de la señal cruda, sigue la misma condición adaptativa del MMPD y permite filtrar artefactos de baja amplitud sin comprometer la sensibilidad del algoritmo ante los cambios reales de PPGA inducidos por el CPT.
 
 
+Con base en este algoritmo, se diseñó el siguiente código, que captura la señal desde el ESP32 por puerto serial, detecta los picos y valles mediante el MMPD, y calcula el SPI pulso a pulso durante una captura según el protocolo del Cold Pressor Test.
+
+Cada muestra recibida corresponde al valor crudo entregado por el MAX30102, que se invierte  para que los picos sistólicos queden representados como máximos. Sobre esta señal invertida se aplica un filtro de dos etapas: un rastreador de línea base adaptativo de baja frecuencia que remueve la deriva lenta de offset y un suavizado exponencial que atenúa el ruido de alta frecuencia sin distorsionar la forma del pulso. De igual forma antes de iniciar la captura se realiza una pre-calibración de base con 15 muestras, descartando las lecturas que estén fuera de un rango razonable para el sensor MAX30102 y por último se calcula el valor inicial de referencia usando la mediana de las lecturas válidas.
+
+Para cada pulso válido se calculan el HBI (intervalo entre pulsos) y la PPGA (amplitud pico-valle), normalizados a una escala de 0 a 100 usando como referencia el rango observado durante los primeros 15 segundos de reposo real de la sesión. El SPI se calcula como:
+
+$$
+SPI = 100 - (0.33 \times HBI_{norm} + 0.67 \times PPGA_{norm})                [8].
+$$
+
+La duración de la captura queda fija en 120 s, dividida en tres fases de 40 segundos,  reposo inicial, Cold Pressor Test y reposo final. El código emite un aviso automático  exactamente en las transiciones de fase (t = 40 s: "aplique el CPT ahora"; t = 80 s: "vuelva a reposo"). Al finalizar, calcula automáticamente el SPI promedio, mínimo y máximo de cada fase y  el número de pulsos válidos por fase.
+
 ```
 clear; clc; close all;
 
