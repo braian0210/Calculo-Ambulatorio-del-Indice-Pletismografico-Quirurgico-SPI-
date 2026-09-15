@@ -162,6 +162,262 @@ La validez y utilidad práctica de este algoritmo cuentan con respaldo adicional
 Una vez identificado cada pico sistólico, la amplitud pico-valle (PPGA) del candidato debe superar el 25 % de la mediana de los PPGA ya confirmados como válidos recientemente. Este criterio complementario, calculado sobre el propio historial de pulsos confirmados y no sobre un umbral absoluto de la señal cruda, sigue la misma condición adaptativa del MMPD y permite filtrar artefactos de baja amplitud sin comprometer la sensibilidad del algoritmo ante los cambios reales de PPGA inducidos por el CPT.
 
 
+```
+clear; clc; close all;
+
+
+puerto     = "COM3";
+baudrate   = 115200;
+t_captura  = 120;   
+t_fase1    = 40;     
+t_fase2    = 80;     
+t_baseline = 15;    
+t_warmup   = 2;      
+ruta_salida = 'C:\Users\brafe\septimo_semestre\laboratorio_instrumentacion\lab3\toma_v2';
+if ~exist(ruta_salida, 'dir'); mkdir(ruta_salida); end
+
+beta_baseline    = 0.03;
+gamma_suavizado  = 0.4;
+frac_prominencia = 0.25;
+n_min_bootstrap  = 3;
+
+s = serialport(puerto, baudrate);
+s.Timeout = 5;
+flush(s);
+
+
+N_seed = 15;
+IR_MIN_PLAUSIBLE = 1e3;   
+IR_MAX_PLAUSIBLE = 3e5;  
+seed_vals = [];
+while numel(seed_vals) < N_seed
+    raw = readline(s);
+    ir  = str2double(raw);
+    if isnan(ir) || abs(ir) < IR_MIN_PLAUSIBLE || abs(ir) > IR_MAX_PLAUSIBLE
+        continue;  
+    end
+    seed_vals(end+1) = -ir; %#ok<AGROW>
+end
+baseline = median(seed_vals);
+suave    = 0;
+
+
+fig = figure('Name','Captura en vivo - Protocolo CPT','NumberTitle','off');
+ax1 = subplot(2,1,1);
+hRaw  = animatedline(ax1, 'Color', [0.6 0.6 0.6]);
+hFilt = animatedline(ax1, 'Color', [0 0.45 0.74], 'LineWidth', 1.3);
+ylabel(ax1, 'Amplitud (u.a.)'); grid(ax1,'on'); xlim(ax1, [0 t_captura]);
+title(ax1, 'Cruda (gris) vs. filtrada (azul) en tiempo real');
+legend(ax1, {'Cruda invertida','Filtrada (pulsátil)'}, 'Location','best');
+xline(ax1, t_fase1, '--m', 'Inicio CPT');
+xline(ax1, t_fase2, '--m', 'Fin CPT');
+
+ax2 = subplot(2,1,2);
+hSPI = animatedline(ax2, 'Color', [0.85 0.1 0.1], 'Marker', 'o', 'LineStyle', '-');
+ylim(ax2, [0 100]); xlim(ax2, [0 t_captura]);
+ylabel(ax2, 'SPI'); xlabel(ax2, 'Tiempo (s)'); grid(ax2,'on');
+title(ax2, 'SPI por pulso (líneas rosadas = ventana del CPT)');
+xline(ax2, t_fase1, '--m', 'Inicio CPT');
+xline(ax2, t_fase2, '--m', 'Fin CPT');
+
+
+contador_subida = 0;
+umbral_subida   = 8;
+ultimo_pico_t   = NaN;
+valor_minimo    = Inf;
+t_valor_minimo  = NaN;
+
+t_hist = []; raw_hist = []; filt_hist = [];
+pico_t = []; pico_v = [];  valle_t = []; valle_v = [];
+
+HBI_hist = []; PPGA_hist = [];
+spi_vals = []; spi_t = [];
+
+base_HBI_rango = []; base_PPGA_rango = [];
+calibrado = false;
+
+n_candidatos          = 0;
+n_rechazo_prominencia = 0;
+n_rechazo_hbi         = 0;
+
+aviso_fase1_dado = false;
+aviso_fase2_dado = false;
+
+fprintf('Iniciando captura de %d s (protocolo CPT: 0-%d reposo | %d-%d CPT | %d-%d reposo)...\n', ...
+    t_captura, t_fase1, t_fase1, t_fase2, t_fase2, t_captura);
+tRef = tic;
+suave_ant = NaN;
+
+while toc(tRef) < t_captura
+    raw = readline(s);
+    ir  = str2double(raw);
+    if isnan(ir); continue; end
+
+    t_actual = toc(tRef);
+    muestra  = -ir;
+
+  
+    if ~aviso_fase1_dado && t_actual >= t_fase1
+        aviso_fase1_dado = true;
+        beep;
+        fprintf('\n*** t = %.1f s: APLIQUE EL COLD PRESSOR TEST AHORA (40 s) ***\n\n', t_actual);
+    end
+    if ~aviso_fase2_dado && t_actual >= t_fase2
+        aviso_fase2_dado = true;
+        beep;
+        fprintf('\n*** t = %.1f s: FIN DEL CPT — VUELVA A LA CONDICIÓN DE REPOSO (40 s) ***\n\n', t_actual);
+    end
+
+    baseline = baseline + beta_baseline*(muestra - baseline);
+    hp       = muestra - baseline;
+    suave    = suave + gamma_suavizado*(hp - suave);
+
+    t_hist(end+1)    = t_actual;
+    raw_hist(end+1)  = muestra;
+    filt_hist(end+1) = suave;
+    addpoints(hRaw,  t_actual, muestra);
+    addpoints(hFilt, t_actual, suave);
+
+    dt_prom = t_actual / numel(t_hist);
+
+    if suave < valor_minimo
+        valor_minimo   = suave;
+        t_valor_minimo = t_actual;
+    end
+
+    if ~isnan(suave_ant)
+        if suave > suave_ant
+            contador_subida = contador_subida + 1;
+        else
+            if contador_subida >= umbral_subida && t_actual >= t_warmup
+                n_candidatos = n_candidatos + 1;
+
+                idx_pico = numel(filt_hist) - 1;
+                t_pico   = t_hist(idx_pico);
+                v_pico   = filt_hist(idx_pico);
+                PPGA_filt = v_pico - valor_minimo;
+
+                if numel(PPGA_hist) >= n_min_bootstrap
+                    prominencia_min = frac_prominencia * median(PPGA_hist(max(1,end-9):end));
+                else
+                    prominencia_min = 0;
+                end
+
+                if PPGA_filt > prominencia_min
+                    pico_t(end+1)  = t_pico;  pico_v(end+1)  = v_pico; %#ok<AGROW>
+                    valle_t(end+1) = t_valor_minimo; valle_v(end+1) = valor_minimo; %#ok<AGROW>
+
+                    if ~isnan(ultimo_pico_t)
+                        HBI  = t_pico - ultimo_pico_t;
+                        PPGA = PPGA_filt;
+
+                        salto_amplitud_ok = isempty(PPGA_hist) || ...
+                            PPGA < 5*median(PPGA_hist(max(1,end-9):end));
+
+                        if HBI > 0.3 && HBI < 2 && salto_amplitud_ok
+                            HBI_hist(end+1)  = HBI;  %#ok<AGROW>
+                            PPGA_hist(end+1) = PPGA; %#ok<AGROW>
+
+                            if ~calibrado && t_pico >= t_baseline && numel(HBI_hist) >= 5
+                                base_HBI_rango  = [min(HBI_hist),  max(HBI_hist)];
+                                base_PPGA_rango = [min(PPGA_hist), max(PPGA_hist)];
+                                calibrado = true;
+                                fprintf('--- Línea base calibrada en t = %.1f s ---\n', t_pico);
+                            end
+
+                            if calibrado
+                                HBI_norm  = max(0,min(100, 100*(HBI -base_HBI_rango(1)) /(diff(base_HBI_rango) +eps)));
+                                PPGA_norm = max(0,min(100, 100*(PPGA-base_PPGA_rango(1))/(diff(base_PPGA_rango)+eps)));
+                                SPI = 100 - (0.33*HBI_norm + 0.67*PPGA_norm);
+
+                                spi_vals(end+1) = SPI; spi_t(end+1) = t_pico; %#ok<AGROW>
+                                addpoints(hSPI, t_pico, SPI);
+                                fprintf('t = %5.1f s | HBI = %.3f s | PPGA = %.1f | SPI = %.1f\n', t_pico, HBI, PPGA, SPI);
+                            else
+                                fprintf('t = %5.1f s | HBI = %.3f s | PPGA = %.1f | (calibrando línea base...)\n', t_pico, HBI, PPGA);
+                            end
+                        else
+                            n_rechazo_hbi = n_rechazo_hbi + 1;
+                        end
+                    end
+                    ultimo_pico_t = t_pico;
+
+                    umbral_min = max(3, round(0.06/dt_prom));
+                    umbral_max = max(umbral_min+2, round(0.6/dt_prom));
+                    umbral_subida = min(umbral_max, max(umbral_min, round(0.6*contador_subida)));
+                else
+                    n_rechazo_prominencia = n_rechazo_prominencia + 1;
+                end
+                valor_minimo   = Inf;
+                t_valor_minimo = NaN;
+            end
+            contador_subida = 0;
+        end
+    end
+
+    suave_ant = suave;
+    drawnow limitrate;
+end
+
+clear s
+fprintf('\nCaptura finalizada. Duración real: %.1f s | Pulsos válidos: %d\n', toc(tRef), numel(spi_vals));
+fprintf('Diagnóstico -> candidatos: %d | rechazados por prominencia: %d | rechazados por HBI/salto: %d\n', ...
+    n_candidatos, n_rechazo_prominencia, n_rechazo_hbi);
+
+
+seg_reposo1 = spi_vals(spi_t <  t_fase1);
+seg_cpt     = spi_vals(spi_t >= t_fase1 & spi_t < t_fase2);
+seg_reposo2 = spi_vals(spi_t >= t_fase2);
+
+fprintf('\n--- RESUMEN POR FASE ---\n');
+fprintf('Reposo inicial (0-%ds):   SPI medio = %6.1f | mín = %5.1f | máx = %5.1f | n = %d\n', ...
+    t_fase1, mean(seg_reposo1), min(seg_reposo1), max(seg_reposo1), numel(seg_reposo1));
+fprintf('Cold Pressor Test (%d-%ds): SPI medio = %6.1f | mín = %5.1f | máx = %5.1f | n = %d\n', ...
+    t_fase1, t_fase2, mean(seg_cpt), min(seg_cpt), max(seg_cpt), numel(seg_cpt));
+fprintf('Reposo final (%d-%ds):    SPI medio = %6.1f | mín = %5.1f | máx = %5.1f | n = %d\n', ...
+    t_fase2, t_captura, mean(seg_reposo2), min(seg_reposo2), max(seg_reposo2), numel(seg_reposo2));
+fprintf('Delta SPI (CPT - reposo inicial) = %.1f\n', mean(seg_cpt) - mean(seg_reposo1));
+fprintf('Delta SPI (reposo final - CPT)   = %.1f\n', mean(seg_reposo2) - mean(seg_cpt));
+
+
+figFinal = figure('Name','Captura completa - Protocolo CPT','NumberTitle','off','Position',[100 100 900 750]);
+
+subplot(3,1,1);
+plot(t_hist, raw_hist, 'Color', [0.6 0.6 0.6]); hold on;
+xline(t_fase1, '--m', 'Inicio CPT'); xline(t_fase2, '--m', 'Fin CPT');
+xlabel('Tiempo (s)'); ylabel('u.a.'); title('Señal cruda invertida'); grid on;
+
+subplot(3,1,2);
+plot(t_hist, filt_hist, 'Color', [0 0.45 0.74]); hold on;
+plot(pico_t, pico_v, 'g^', 'MarkerFaceColor','g');
+plot(valle_t, valle_v, 'rv', 'MarkerFaceColor','r');
+xline(t_fase1, '--m', 'Inicio CPT'); xline(t_fase2, '--m', 'Fin CPT');
+legend('Señal filtrada','Picos sistólicos','Valles','Location','best');
+xlabel('Tiempo (s)'); ylabel('u.a.'); title('Señal filtrada con picos/valles detectados'); grid on;
+
+if ~isempty(pico_v)
+    ylim_filt = [min([valle_v, pico_v]), max([valle_v, pico_v])];
+    margen = 0.2 * max(range(ylim_filt), 1);
+    ylim(ylim_filt + [-margen, margen]);
+end
+
+subplot(3,1,3);
+plot(spi_t, spi_vals, '-o', 'Color', [0.85 0.1 0.1], 'MarkerFaceColor', [0.85 0.1 0.1]); hold on;
+yline(50, '--k', 'SPI = 50');
+xline(t_fase1, '--m', 'Inicio CPT'); xline(t_fase2, '--m', 'Fin CPT');
+ylim([0 100]);
+xlabel('Tiempo (s)'); ylabel('SPI'); title('Evolución del SPI (reposo | CPT | reposo)'); grid on;
+
+
+nombre_base = fullfile(ruta_salida, ['captura_CPT_' datestr(now,'yyyymmdd_HHMMSS')]);
+exportgraphics(figFinal, [nombre_base '.png'], 'Resolution', 300);
+save([nombre_base '.mat'], 't_hist','raw_hist','filt_hist','pico_t','pico_v', ...
+     'valle_t','valle_v','spi_t','spi_vals','HBI_hist','PPGA_hist', ...
+     'seg_reposo1','seg_cpt','seg_reposo2','t_fase1','t_fase2');
+fprintf('\nGráfica guardada en: %s.png\nDatos guardados en:  %s.mat\n', nombre_base, nombre_base);
+
+```
+
 
 3. Pídale a uno de los integrantes del grupo que coloque su dedo sobre el sensor
 óptico y configure el código para una captura de 2 minutos. Cuando transcurran 40 segundos, el voluntario deberá ejecutar la maniobra “Cold
