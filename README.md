@@ -614,6 +614,7 @@ En las tres grafucas se trazan líneas verticales discontinuas delimitando visua
 <b>Figura 7.</b> Captura Final.
 </p>
 
+La gráfica obtenida  permite visualizar con claridad el comportamiento descrito teóricamente del SPI, ya que se mantiene en niveles moderados durante la primera parte del reposo inicial, alcanza sus valores más altos hacia la ventana del CPT y muestra una tendencia descendente sostenida una vez cruzada la marca de "Fin CPT", llegando a los valores más bajos de todo el registro hacia el final de la captura.
 
 Parte C 
 
