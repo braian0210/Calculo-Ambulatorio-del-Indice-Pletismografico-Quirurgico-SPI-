@@ -568,6 +568,39 @@ t = 119.7 s | HBI = 1.037 s | PPGA = 826.3 | SPI = 10.0
 
 ```
 
+<table style="background-color: white; color: black; border-collapse: collapse; width: 100%;">
+  <thead>
+    <tr>
+      <th style="border: 1px solid #ccc; padding: 8px;">Fase</th>
+      <th style="border: 1px solid #ccc; padding: 8px;">Intervalo</th>
+      <th style="border: 1px solid #ccc; padding: 8px;">SPI medio</th>
+      <th style="border: 1px solid #ccc; padding: 8px;">Pulsos válidos (n)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border: 1px solid #ccc; padding: 8px;">Reposo inicial</td>
+      <td style="border: 1px solid #ccc; padding: 8px;">0-40 s</td>
+      <td style="border: 1px solid #ccc; padding: 8px;">29.9</td>
+      <td style="border: 1px solid #ccc; padding: 8px;">22</td>
+    </tr>
+    <tr>
+      <td style="border: 1px solid #ccc; padding: 8px;">Cold Pressor Test</td>
+      <td style="border: 1px solid #ccc; padding: 8px;">40-80 s</td>
+      <td style="border: 1px solid #ccc; padding: 8px;">47.3</td>
+      <td style="border: 1px solid #ccc; padding: 8px;">42</td>
+    </tr>
+    <tr>
+      <td style="border: 1px solid #ccc; padding: 8px;">Reposo final</td>
+      <td style="border: 1px solid #ccc; padding: 8px;">80-120 s</td>
+      <td style="border: 1px solid #ccc; padding: 8px;">13.4</td>
+      <td style="border: 1px solid #ccc; padding: 8px;">39</td>
+    </tr>
+  </tbody>
+</table>
+
+
+
 4. Modifique el código para, mediante una gráfica y al final de la captura, se
 pueda visualizar la evolución del SPI en función del tiempo.
 
