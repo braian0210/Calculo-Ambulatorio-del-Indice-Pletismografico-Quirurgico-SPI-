@@ -426,7 +426,135 @@ alcanza el SPI antes y durante la maniobra. Transcurrido este tiempo, el
 voluntario volverá a las condiciones iniciales hasta completarse los 2 minutos.
 Recuerde tomar nota también del valor SPI durante los últimos 40 segundos.
 
+<img width="2377" height="2070" alt="captura_CPT_20260911_113214" src="https://github.com/user-attachments/assets/57b0e2b7-2bf1-498c-9d0d-6e107a30aaf5" />
 
+<b>Figura 7.</b> Captura  .
+</p>
+
+```
+Iniciando captura de 120 s (protocolo CPT: 0-40 reposo | 40-80 CPT | 80-120 reposo)...
+t = 3.3 s | HBI = 0.922 s | PPGA = 402.8 | (calibrando línea base...)
+t = 4.1 s | HBI = 0.762 s | PPGA = 318.7 | (calibrando línea base...)
+t = 5.1 s | HBI = 1.046 s | PPGA = 597.1 | (calibrando línea base...)
+t = 6.0 s | HBI = 0.918 s | PPGA = 550.2 | (calibrando línea base...)
+t = 6.9 s | HBI = 0.874 s | PPGA = 363.6 | (calibrando línea base...)
+t = 7.9 s | HBI = 1.012 s | PPGA = 363.0 | (calibrando línea base...)
+t = 9.0 s | HBI = 1.077 s | PPGA = 498.8 | (calibrando línea base...)
+t = 9.9 s | HBI = 0.886 s | PPGA = 387.8 | (calibrando línea base...)
+t = 10.8 s | HBI = 0.952 s | PPGA = 319.7 | (calibrando línea base...)
+t = 11.8 s | HBI = 0.928 s | PPGA = 326.5 | (calibrando línea base...)
+t = 12.9 s | HBI = 1.158 s | PPGA = 454.8 | (calibrando línea base...)
+t = 13.8 s | HBI = 0.921 s | PPGA = 515.2 | (calibrando línea base...)
+--- Línea base calibrada en t = 17.8 s ---
+t = 17.8 s | HBI = 0.884 s | PPGA = 558.0 | SPI = 32.2
+t = 18.7 s | HBI = 0.867 s | PPGA = 448.5 | SPI = 60.0
+t = 19.7 s | HBI = 1.002 s | PPGA = 351.8 | SPI = 72.0
+t = 21.0 s | HBI = 1.252 s | PPGA = 491.2 | SPI = 25.5
+t = 21.9 s | HBI = 0.950 s | PPGA = 583.6 | SPI = 20.5
+t = 22.9 s | HBI = 1.012 s | PPGA = 556.7 | SPI = 21.9
+t = 23.8 s | HBI = 0.917 s | PPGA = 374.6 | SPI = 73.6
+t = 25.0 s | HBI = 1.203 s | PPGA = 487.0 | SPI = 26.5
+t = 26.0 s | HBI = 0.919 s | PPGA = 722.2 | SPI = 19.9
+t = 27.0 s | HBI = 1.046 s | PPGA = 615.5 | SPI = 9.3
+t = 28.0 s | HBI = 0.956 s | PPGA = 414.8 | SPI = 60.7
+t = 29.2 s | HBI = 1.198 s | PPGA = 567.2 | SPI = 7.2
+t = 30.2 s | HBI = 1.015 s | PPGA = 705.5 | SPI = 11.9
+t = 31.2 s | HBI = 1.007 s | PPGA = 670.4 | SPI = 12.5
+t = 32.1 s | HBI = 0.939 s | PPGA = 416.8 | SPI = 61.6
+t = 33.3 s | HBI = 1.135 s | PPGA = 546.8 | SPI = 14.0
+t = 34.2 s | HBI = 0.986 s | PPGA = 801.9 | SPI = 14.3
+t = 35.2 s | HBI = 0.964 s | PPGA = 666.3 | SPI = 16.2
+t = 36.2 s | HBI = 1.000 s | PPGA = 479.3 | SPI = 41.5
+t = 37.2 s | HBI = 1.013 s | PPGA = 529.8 | SPI = 28.2
+t = 38.2 s | HBI = 0.994 s | PPGA = 707.2 | SPI = 13.6
+t = 39.2 s | HBI = 0.997 s | PPGA = 589.8 | SPI = 15.1
+
+* t = 40.0 s: APLIQUE EL COLD PRESSOR TEST AHORA (40 s) *
+t = 40.2 s | HBI = 0.971 s | PPGA = 491.2 | SPI = 41.0
+t = 41.2 s | HBI = 1.002 s | PPGA = 563.3 | SPI = 21.1
+t = 42.1 s | HBI = 0.885 s | PPGA = 397.1 | SPI = 70.8
+t = 43.1 s | HBI = 1.063 s | PPGA = 451.8 | SPI = 42.8
+t = 44.0 s | HBI = 0.846 s | PPGA = 401.1 | SPI = 73.1
+t = 44.8 s | HBI = 0.800 s | PPGA = 532.7 | SPI = 45.3
+t = 45.7 s | HBI = 0.903 s | PPGA = 402.2 | SPI = 68.1
+t = 46.5 s | HBI = 0.826 s | PPGA = 475.6 | SPI = 56.8
+t = 47.5 s | HBI = 1.026 s | PPGA = 426.6 | SPI = 52.0
+t = 48.3 s | HBI = 0.807 s | PPGA = 293.7 | SPI = 96.2
+t = 49.5 s | HBI = 1.118 s | PPGA = 415.3 | SPI = 47.1
+t = 50.3 s | HBI = 0.816 s | PPGA = 347.1 | SPI = 88.7
+t = 52.0 s | HBI = 1.703 s | PPGA = 336.2 | SPI = 62.8
+t = 52.9 s | HBI = 0.908 s | PPGA = 391.4 | SPI = 70.3
+t = 53.9 s | HBI = 0.976 s | PPGA = 431.5 | SPI = 55.0
+t = 54.6 s | HBI = 0.728 s | PPGA = 398.3 | SPI = 80.8
+t = 55.6 s | HBI = 0.963 s | PPGA = 439.5 | SPI = 54.2
+t = 56.3 s | HBI = 0.718 s | PPGA = 467.5 | SPI = 64.2
+t = 57.3 s | HBI = 1.036 s | PPGA = 415.6 | SPI = 53.8
+t = 58.0 s | HBI = 0.717 s | PPGA = 536.6 | SPI = 47.6
+t = 58.8 s | HBI = 0.738 s | PPGA = 332.2 | SPI = 96.8
+t = 59.7 s | HBI = 0.955 s | PPGA = 514.4 | SPI = 36.8
+t = 60.7 s | HBI = 0.995 s | PPGA = 426.6 | SPI = 54.6
+t = 61.6 s | HBI = 0.839 s | PPGA = 436.1 | SPI = 65.3
+t = 62.7 s | HBI = 1.133 s | PPGA = 394.8 | SPI = 50.7
+t = 63.6 s | HBI = 0.911 s | PPGA = 576.8 | SPI = 25.5
+t = 64.4 s | HBI = 0.819 s | PPGA = 460.3 | SPI = 61.2
+t = 65.4 s | HBI = 1.018 s | PPGA = 508.8 | SPI = 32.8
+t = 66.3 s | HBI = 0.886 s | PPGA = 412.6 | SPI = 67.0
+t = 67.4 s | HBI = 1.041 s | PPGA = 594.2 | SPI = 10.4
+t = 68.2 s | HBI = 0.795 s | PPGA = 249.0 | SPI = 97.2
+t = 69.2 s | HBI = 1.046 s | PPGA = 711.3 | SPI = 9.3
+t = 70.4 s | HBI = 1.168 s | PPGA = 470.9 | SPI = 30.4
+t = 71.0 s | HBI = 0.670 s | PPGA = 629.0 | SPI = 33.0
+t = 72.0 s | HBI = 0.963 s | PPGA = 614.4 | SPI = 16.2
+t = 73.0 s | HBI = 1.043 s | PPGA = 582.1 | SPI = 13.1
+t = 74.2 s | HBI = 1.123 s | PPGA = 752.1 | SPI = 2.9
+t = 75.8 s | HBI = 1.677 s | PPGA = 781.7 | SPI = 0.0
+t = 76.7 s | HBI = 0.884 s | PPGA = 544.1 | SPI = 35.5
+t = 77.7 s | HBI = 0.994 s | PPGA = 546.2 | SPI = 25.8
+t = 78.8 s | HBI = 1.049 s | PPGA = 733.3 | SPI = 9.1
+t = 79.7 s | HBI = 0.913 s | PPGA = 811.1 | SPI = 20.3
+
+* t = 80.0 s: FIN DEL CPT — VUELVA A LA CONDICIÓN DE REPOSO (40 s) *
+t = 80.7 s | HBI = 0.966 s | PPGA = 737.2 | SPI = 16.0
+t = 81.7 s | HBI = 1.022 s | PPGA = 646.8 | SPI = 11.3
+t = 82.9 s | HBI = 1.203 s | PPGA = 645.5 | SPI = 0.0
+t = 83.6 s | HBI = 0.772 s | PPGA = 617.3 | SPI = 32.2
+t = 84.7 s | HBI = 1.038 s | PPGA = 648.2 | SPI = 9.9
+t = 85.5 s | HBI = 0.780 s | PPGA = 1021.2 | SPI = 31.4
+t = 86.4 s | HBI = 0.982 s | PPGA = 434.1 | SPI = 53.8
+t = 87.3 s | HBI = 0.898 s | PPGA = 529.0 | SPI = 38.0
+t = 88.4 s | HBI = 1.011 s | PPGA = 997.4 | SPI = 12.2
+t = 89.3 s | HBI = 0.927 s | PPGA = 1126.2 | SPI = 19.3
+t = 90.2 s | HBI = 0.943 s | PPGA = 895.7 | SPI = 17.9
+t = 91.3 s | HBI = 1.073 s | PPGA = 1000.3 | SPI = 7.0
+t = 92.2 s | HBI = 0.869 s | PPGA = 951.3 | SPI = 24.0
+t = 93.1 s | HBI = 0.906 s | PPGA = 1056.0 | SPI = 21.0
+t = 94.0 s | HBI = 0.884 s | PPGA = 807.2 | SPI = 22.8
+t = 94.9 s | HBI = 0.902 s | PPGA = 1308.4 | SPI = 21.3
+t = 96.1 s | HBI = 1.201 s | PPGA = 1119.0 | SPI = 0.0
+t = 97.0 s | HBI = 0.900 s | PPGA = 1313.0 | SPI = 21.5
+t = 98.2 s | HBI = 1.226 s | PPGA = 1654.4 | SPI = 0.0
+t = 99.2 s | HBI = 1.031 s | PPGA = 895.1 | SPI = 10.5
+t = 100.4 s | HBI = 1.204 s | PPGA = 1378.0 | SPI = 0.0
+t = 101.5 s | HBI = 1.068 s | PPGA = 1327.1 | SPI = 7.5
+t = 102.7 s | HBI = 1.193 s | PPGA = 1009.9 | SPI = 0.0
+t = 103.6 s | HBI = 0.901 s | PPGA = 1031.3 | SPI = 21.3
+t = 104.8 s | HBI = 1.197 s | PPGA = 1218.0 | SPI = 0.0
+t = 105.7 s | HBI = 0.878 s | PPGA = 1232.3 | SPI = 23.3
+t = 106.7 s | HBI = 1.060 s | PPGA = 1315.1 | SPI = 8.1
+t = 107.6 s | HBI = 0.917 s | PPGA = 1618.5 | SPI = 20.1
+t = 108.8 s | HBI = 1.138 s | PPGA = 1222.2 | SPI = 1.7
+t = 109.8 s | HBI = 1.042 s | PPGA = 1406.8 | SPI = 9.6
+t = 110.8 s | HBI = 1.023 s | PPGA = 1333.5 | SPI = 11.2
+t = 112.1 s | HBI = 1.268 s | PPGA = 1319.6 | SPI = 0.0
+t = 113.0 s | HBI = 0.939 s | PPGA = 1514.8 | SPI = 18.2
+t = 114.3 s | HBI = 1.210 s | PPGA = 1268.3 | SPI = 0.0
+t = 115.4 s | HBI = 1.100 s | PPGA = 1569.1 | SPI = 4.8
+t = 116.4 s | HBI = 1.071 s | PPGA = 1332.1 | SPI = 7.2
+t = 117.6 s | HBI = 1.209 s | PPGA = 1348.2 | SPI = 0.0
+t = 118.7 s | HBI = 1.053 s | PPGA = 1296.3 | SPI = 8.8
+t = 119.7 s | HBI = 1.037 s | PPGA = 826.3 | SPI = 10.0
+
+```
 
 4. Modifique el código para, mediante una gráfica y al final de la captura, se
 pueda visualizar la evolución del SPI en función del tiempo.
