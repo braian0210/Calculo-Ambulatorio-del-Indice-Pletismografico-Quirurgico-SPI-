@@ -172,7 +172,7 @@ $$
 SPI = 100 - (0.33 \times HBI_{norm} + 0.67 \times PPGA_{norm})                [8].
 $$
 
-La duración de la captura queda fija en 120 s, dividida en tres fases de 40 segundos,  reposo inicial, Cold Pressor Test y reposo final. El código emite un aviso automático  exactamente en las transiciones de fase (t = 40 s: "aplique el CPT ahora"; t = 80 s: "vuelva a reposo"). Al finalizar, calcula automáticamente el SPI promedio, mínimo y máximo de cada fase y  el número de pulsos válidos por fase.
+La duración de la captura queda fija en 120 s, dividida en tres fases de 40 segundos,  reposo inicial, Cold Pressor Test y reposo final. Al finalizar, calcula automáticamente el SPI promedio, mínimo y máximo de cada fase y  el número de pulsos válidos por fase.
 
 ```
 clear; clc; close all;
