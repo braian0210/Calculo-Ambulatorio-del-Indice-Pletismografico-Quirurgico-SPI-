@@ -438,13 +438,9 @@ alcanza el SPI antes y durante la maniobra. Transcurrido este tiempo, el
 voluntario volverá a las condiciones iniciales hasta completarse los 2 minutos.
 Recuerde tomar nota también del valor SPI durante los últimos 40 segundos.
 
-<img width="2377" height="2070" alt="captura_CPT_20260911_113214" src="https://github.com/user-attachments/assets/57b0e2b7-2bf1-498c-9d0d-6e107a30aaf5" />
-
-<b>Figura 7.</b> Captura  .
-</p>
+A continuación se muestran los valores obtenidos en el command window de las diferentes variables (SPI, PPGA, HBI) en la tres fases de la toma de 120 segundos, en donde los primeros (15-20) segundos de la primera fase de 40 segundos corresponden a una fase de calibración, la segunda fase entre los (40-80) segundos que comprende el tiempo en donde se aplica el Cold Pressor Test y los últimos 40 segundos de la fase tres que hace corresponde a la ultima fase de reposo despu{es de haber sido aplicada el CPT.
 
 ```
-Iniciando captura de 120 s (protocolo CPT: 0-40 reposo | 40-80 CPT | 80-120 reposo)...
 t = 3.3 s | HBI = 0.922 s | PPGA = 402.8 | (calibrando línea base...)
 t = 4.1 s | HBI = 0.762 s | PPGA = 318.7 | (calibrando línea base...)
 t = 5.1 s | HBI = 1.046 s | PPGA = 597.1 | (calibrando línea base...)
@@ -568,6 +564,9 @@ t = 119.7 s | HBI = 1.037 s | PPGA = 826.3 | SPI = 10.0
 
 ```
 
+El sistema calculó y registró automáticamente el SPI promedio de cada fase a partir del resumen numérico que el propio código hecho en MATLAB imprime al finalizar la captura, para la toma considerada en este informe (Toma 4).
+
+
 <table style="background-color: white; color: black; border-collapse: collapse; width: 100%;">
   <thead>
     <tr>
@@ -599,10 +598,16 @@ t = 119.7 s | HBI = 1.037 s | PPGA = 826.3 | SPI = 10.0
   </tbody>
 </table>
 
+Esta toma presentó la señal de mejor calidad registrada durante la práctica, con una tasa de rechazo de pulsos baja de 1.7 %, lo que permite darle mayor peso a los valores obtenidos. El SPI muestra el comportamiento esperado de la maniobra ya que parte de un nivel relativamente bajo en el reposo inicial (29.9), se incrementa durante la aplicación del CPT (47.3) y cae de forma marcada en el reposo final (13.4), por debajo incluso del valor con el que inició la captura. Esta caída pronunciada al término de la prueba es compatible con una respuesta del sistema parasimpático tras la retirada del estímulo frío.
 
 
 4. Modifique el código para, mediante una gráfica y al final de la captura, se
 pueda visualizar la evolución del SPI en función del tiempo.
+
+<img width="2377" height="2070" alt="captura_CPT_20260911_113214" src="https://github.com/user-attachments/assets/57b0e2b7-2bf1-498c-9d0d-6e107a30aaf5" />
+
+<b>Figura 7.</b> Captura Final.
+</p>
 
 
 Parte C 
