@@ -438,7 +438,7 @@ alcanza el SPI antes y durante la maniobra. Transcurrido este tiempo, el
 voluntario volverá a las condiciones iniciales hasta completarse los 2 minutos.
 Recuerde tomar nota también del valor SPI durante los últimos 40 segundos.
 
-A continuación se muestran los valores obtenidos en el command window de las diferentes variables (SPI, PPGA, HBI) en la tres fases de la toma de 120 segundos, en donde los primeros (15-20) segundos de la primera fase de 40 segundos corresponden a una fase de calibración, la segunda fase entre los (40-80) segundos que comprende el tiempo en donde se aplica el Cold Pressor Test y los últimos 40 segundos de la fase tres que hace corresponde a la ultima fase de reposo despu{es de haber sido aplicada el CPT.
+A continuación se muestran los valores obtenidos en el command window de las diferentes variables (SPI, PPGA, HBI) en la tres fases de la toma de 120 segundos, en donde los primeros (15-20) segundos de la primera fase de 40 segundos corresponden a una fase de calibración, la segunda fase entre los (40-80) segundos que comprende el tiempo en donde se aplica el Cold Pressor Test y los últimos 40 segundos de la fase tres que hace corresponde a la ultima fase de reposo después de haber sido aplicada el CPT.
 
 ```
 t = 3.3 s | HBI = 0.922 s | PPGA = 402.8 | (calibrando línea base...)
@@ -564,7 +564,7 @@ t = 119.7 s | HBI = 1.037 s | PPGA = 826.3 | SPI = 10.0
 
 ```
 
-El sistema calculó y registró automáticamente el SPI promedio de cada fase a partir del resumen numérico que el propio código hecho en MATLAB imprime al finalizar la captura, para la toma considerada en este informe (Toma 4).
+El sistema calculó y registró automáticamente el SPI promedio de cada fase a partir de los resultados que imprime el propio código hecho en MATLAB  al finalizar la captura.
 
 
 <table style="background-color: white; color: black; border-collapse: collapse; width: 100%;">
@@ -606,7 +606,7 @@ pueda visualizar la evolución del SPI en función del tiempo.
 
 El código genera al finalizar la captura una figura de tres gráficas superpuestos en el tiempo. La primer gráfica muestra la señal cruda invertida a lo largo de los 120 s de registro, la segunda gráfica corresponde a la señal ya filtrada con los picos sistólicos y los valles diastólicos marcados sobre ella y la tercer gráfica corresponde a la evolución del SPI pulso a pulso durante toda la captura.
 
-En las tres grafucas se trazan líneas verticales discontinuas delimitando visualmente el inicio y el fin de la maniobra CPT, de modo que cualquier variación observada en la señal pueda ubicarse de inmediato dentro de la fase en la que ocurrió. En el panel del SPI se añade además una línea horizontal de referencia en SPI = 50 y que es un valor que la literatura clínica señala como límite superior deseable durante estímulos nociceptivos controlados [8], lo que permite comparar visualmente sin necesidad de leer los valores numéricos.
+En las tres gráficas se trazan líneas verticales discontinuas delimitando visualmente el inicio y el fin de la maniobra CPT, de modo que cualquier variación observada en la señal pueda ubicarse de inmediato dentro de la fase en la que ocurrió. En la gráfica del SPI se añade además una línea horizontal de referencia en SPI = 50 que es un valor que la literatura clínica señala como límite superior deseable durante estímulos nociceptivos controlados [8], lo que permite comparar visualmente sin necesidad de leer los valores numéricos.
 
 
 <img width="2377" height="2070" alt="captura_CPT_20260911_113214" src="https://github.com/user-attachments/assets/57b0e2b7-2bf1-498c-9d0d-6e107a30aaf5" />
