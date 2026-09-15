@@ -604,6 +604,11 @@ Esta toma presentó la señal de mejor calidad registrada durante la práctica, 
 4. Modifique el código para, mediante una gráfica y al final de la captura, se
 pueda visualizar la evolución del SPI en función del tiempo.
 
+El código genera al finalizar la captura una figura de tres gráficas superpuestos en el tiempo. La primer gráfica muestra la señal cruda invertida a lo largo de los 120 s de registro, la segunda gráfica corresponde a la señal ya filtrada con los picos sistólicos y los valles diastólicos marcados sobre ella y la tercer gráfica corresponde a la evolución del SPI pulso a pulso durante toda la captura.
+
+En las tres grafucas se trazan líneas verticales discontinuas delimitando visualmente el inicio y el fin de la maniobra CPT, de modo que cualquier variación observada en la señal pueda ubicarse de inmediato dentro de la fase en la que ocurrió. En el panel del SPI se añade además una línea horizontal de referencia en SPI = 50 y que es un valor que la literatura clínica señala como límite superior deseable durante estímulos nociceptivos controlados [8], lo que permite comparar visualmente sin necesidad de leer los valores numéricos.
+
+
 <img width="2377" height="2070" alt="captura_CPT_20260911_113214" src="https://github.com/user-attachments/assets/57b0e2b7-2bf1-498c-9d0d-6e107a30aaf5" />
 
 <b>Figura 7.</b> Captura Final.
