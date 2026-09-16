@@ -621,6 +621,8 @@ Parte C
 • Pregunta 1: ¿Cómo se relacionan las variaciones del volumen sanguíneo
 periférico con el balance autonómico?
 
+El sistema nervioso autónomo regular el diámetro de los vasos sanguíneos al causar vasoconstricción o vasodilatación ante estímulos externos, estos pueden ser por dolor, cambios de temperatura e incluso emociones, Al cambiar este diámetro, hay menos capacidad sanguínea por tramos de el vaso sanguíneo, por lo tanto la señal respuesta que esta ligada a la luz que absorbe la sangre, se reduce en casos de vasoconstricción porque se reduce el el volumen periférico que puede haber dependiendo el estado del vaso, este es regulado por el sistema nervioso autónomo por lo tanto la relación que hay entre el volumen sanguíneo periférico y el cambio a predominancia entre sistema simpático y parasimpático (balance autonómico), es que según la predominancia de uno u otro, altera el volumen de sangre capas de haber en el vaso
+
 • Pregunta 2: ¿Cómo se compara el SPI con otros índices comúnmente
 empleados en cirugía, como el índice nocicepción-analgesia (ANI) y el
 índice de perfusión?
